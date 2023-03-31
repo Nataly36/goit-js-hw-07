@@ -1,18 +1,24 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-<div class="lightbox">
-    <div class="lightbox__overlay"></div>
 
-    <div class="lightbox__content">
-        <img class="lightbox___image " src="" alt="" />
-    </div>
+const list = document.querySelector(".gallery");
 
-    <button
-        type="button"
-        class="lightbox__button"
-        data-action="close-lightbox"
-    >
-        <i class="material-icons">close</i>
-    </button>
-</div>
-console.log(galleryItems);
+const markup = galleryItems.reduce(
+  (acc, { original, preview, description }) =>
+    (acc += `<li>
+  <a class="gallery__item" href="${original}">
+    <img
+      class="gallery__image"
+      src="${preview}"
+      alt="${description}"
+    />
+  </a>
+</li>`),
+  ''
+);
+
+list.insertAdjacentHTML('beforeend', markup);
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
